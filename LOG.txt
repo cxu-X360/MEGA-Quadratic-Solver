@@ -1,0 +1,193 @@
+NUM                       a        b        c      x1       x2  num_roots
+0  Correct values:        0        0        0      nan      nan        -1
+   Calc values:           0        0        0      nan      nan        -1
+   Result: Correct
+
+1  Correct values:        0        0        1      nan      nan         0
+   Calc values:           0        0        1      nan      nan         0
+   Result: Correct
+
+2  Correct values:        0        1        0        0        0         1
+   Calc values:           0        1        0        0        0         1
+   Result: Correct
+
+3  Correct values:        0        1        1       -1       -1         1
+   Calc values:           0        1        1       -1       -1         1
+   Result: Correct
+
+4  Correct values:        1        0        0        0        0         1
+   Calc values:           1        0        0        0       -0         1
+   Result: Correct
+
+5  Correct values:        1        0        1      nan      nan         4
+   Calc values:           1        0        1       -0        1         4
+   Result: Correct
+
+6  Correct values:        1        1        0        0       -1         2
+   Calc values:           1        1        0        0       -1         2
+   Result: Correct
+
+7  Correct values:        1        1       -1   -1.618  0.61803         2
+   Calc values:           1        1       -1  0.61803   -1.618         2
+   Result: Correct
+
+8  Correct values:       -6      -78     -180      -10       -3         2
+   Calc values:          -6      -78     -180      -10       -3         2
+   Result: Correct
+
+9  Correct values:       -6      -60      -96       -8       -2         2
+   Calc values:          -6      -60      -96       -8       -2         2
+   Result: Correct
+
+10  Correct values:       -6       24      192        8       -4         2
+   Calc values:          -6       24      192       -4        8         2
+   Result: Correct
+
+11  Correct values:       -6       -8 -3.3333333        4        2         2
+   Calc values:          -6       -8 -3.3333333        4        2         4
+   Result: Correct
+
+12  Correct values:       -6       -8 -5.3333333        4        4         2
+   Calc values:          -6       -8 -5.3333333        4        4         4
+   Result: Correct
+
+13  Correct values:       -6        6      180        6       -5         2
+   Calc values:          -6        6      180       -5        6         2
+   Result: Correct
+
+14  Correct values:       -6        6 -12.166667       -3        8         2
+   Calc values:          -6        6 -12.166667       -3        8         4
+   Result: Correct
+
+15  Correct values:       -6       72     -210        7        5         2
+   Calc values:          -6       72     -210        5        7         2
+   Result: Correct
+
+16  Correct values:       -6       20 -19.333333      -10        4         2
+   Calc values:          -6       20 -19.333333      -10        4         4
+   Result: Correct
+
+17  Correct values:       -6        0       -0        0        0         2
+   Calc values:          -6        0       -0       -0        0         1
+   Result: Correct
+
+18  Correct values:       -6       12      378        9       -7         2
+   Calc values:          -6       12      378       -7        9         2
+   Result: Correct
+
+19  Correct values:       -6      -12       -6       -1       -1         2
+   Calc values:          -6      -12       -6       -1       -1         1
+   Result: Correct
+
+20  Correct values:       -6      -18      168       -7        4         2
+   Calc values:          -6      -18      168       -7        4         2
+   Result: Correct
+
+21  Correct values:       -6        0 -10.666667        0        8         2
+   Calc values:          -6        0 -10.666667       -0        8         4
+   Result: Correct
+
+22  Correct values:       -6       30      -24        1        4         2
+   Calc values:          -6       30      -24        1        4         2
+   Result: Correct
+
+23  Correct values:       -6      -10 -6.8333333        5        4         2
+   Calc values:          -6      -10 -6.8333333        5        4         4
+   Result: Correct
+
+24  Correct values:       -6       20 -17.333333      -10        2         2
+   Calc values:          -6       20 -17.333333      -10        2         4
+   Result: Correct
+
+25  Correct values:       -6       -6      336        7       -8         2
+   Calc values:          -6       -6      336       -8        7         2
+   Result: Correct
+
+26  Correct values:       -6      -18      -12       -2       -1         2
+   Calc values:          -6      -18      -12       -2       -1         2
+   Result: Correct
+
+27  Correct values:       -6       24      192        8       -4         2
+   Calc values:          -6       24      192       -4        8         2
+   Result: Correct
+
+28  Correct values:       -6        6      -15       -3        9         2
+   Calc values:          -6        6      -15       -3        9         4
+   Result: Correct
+
+29  Correct values:       -6       -8 -4.1666667        4        3         2
+   Calc values:          -6       -8 -4.1666667        4        3         4
+   Result: Correct
+
+30  Correct values:       -6      -60     -150       -5       -5         2
+   Calc values:          -6      -60     -150       -5       -5         1
+   Result: Correct
+
+31  Correct values:       -6        6      120       -4        5         2
+   Calc values:          -6        6      120       -4        5         2
+   Result: Correct
+
+32  Correct values:       -6      -16 -16.666667        8        6         2
+   Calc values:          -6      -16 -16.666667        8        6         4
+   Result: Correct
+
+33  Correct values:       -6      -18      -15        9        3         2
+   Calc values:          -6      -18      -15        9        3         4
+   Result: Correct
+
+34  Correct values:       -6        0       -6        0        6         2
+   Calc values:          -6        0       -6       -0        6         4
+   Result: Correct
+
+35  Correct values:       -6      -42      -72       -3       -4         2
+   Calc values:          -6      -42      -72       -4       -3         2
+   Result: Correct
+
+36  Correct values:       -6        8 -10.833333       -4        7         2
+   Calc values:          -6        8 -10.833333       -4        7         4
+   Result: Correct
+
+37  Correct values:       -6       48       -0        8        0         2
+   Calc values:          -6       48       -0       -0        8         2
+   Result: Correct
+
+38  Correct values:        0       -6       -8    -0.75    -0.75         1
+   Calc values:           0       -6       -8    -0.75    -0.75         1
+   Result: Correct
+
+39  Correct values:        0      -10       -3  -3.3333  -3.3333         1
+   Calc values:           0      -10       -3  -3.3333  -3.3333         1
+   Result: Correct
+
+40  Correct values:        0        7       -8    0.875    0.875         1
+   Calc values:           0        7       -8    0.875    0.875         1
+   Result: Correct
+
+41  Correct values:        0       -2        7  0.28571  0.28571         1
+   Calc values:           0       -2        7  0.28571  0.28571         1
+   Result: Correct
+
+42  Correct values:        0        8       -4        2        2         1
+   Calc values:           0        8       -4        2        2         1
+   Result: Correct
+
+43  Correct values:        0       -8        4        2        2         1
+   Calc values:           0       -8        4        2        2         1
+   Result: Correct
+
+44  Correct values:        0       -8        2        4        4         1
+   Calc values:           0       -8        2        4        4         1
+   Result: Correct
+
+45  Correct values:        0        6        4     -1.5     -1.5         1
+   Calc values:           0        6        4     -1.5     -1.5         1
+   Result: Correct
+
+46  Correct values:        0       -3        4     0.75     0.75         1
+   Calc values:           0       -3        4     0.75     0.75         1
+   Result: Correct
+
+47  Correct values:        0        4        6 -0.66667 -0.66667         1
+   Calc values:           0        4        6 -0.66667 -0.66667         1
+   Result: Correct
+
