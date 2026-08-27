@@ -16,7 +16,7 @@ double calc_discriminant(double a, double b, double c)  //Вычисление �
  	return D;
 }
 
-int linear_equation(double a, double b, double c, double  *x1_ptr, double  *x2_ptr)  //Вычисление корней  при сведение к линейному уравнению (а=0)
+int linear_equation(double b, double c, double  *x1_ptr, double  *x2_ptr)  //Вычисление корней  при сведение к линейному уравнению (а=0)
 {
 		if (isnul(b)) // Если и коэфицент b равен 0, остается константное уравнение
 		{
@@ -38,7 +38,7 @@ int linear_equation(double a, double b, double c, double  *x1_ptr, double  *x2_p
 
 		else //b!=0 уравнеие линейное и решением является -b/c - 1 корень
 		{ 
-			*x2_ptr = *x1_ptr = c != 0 ? -b / c : 0; //Если с = 0 то делить нельзя и ур-ние сводится к bx=0 и есть 1 корень = 0
+			*x2_ptr = *x1_ptr = ((!isnul(c)) ? -b / c : 0); //Если с = 0 то делить нельзя и ур-ние сводится к bx=0 и есть 1 корень = 0
 			return ONE_ROOT;
 		}
 }
@@ -85,7 +85,7 @@ int solve_equation(double a, double b, double c, double  *x1_ptr, double  *x2_pt
 
 	if (isnul(a)) //Если а=0, то линейный случай
 	{
-		return linear_equation(a, b, c, x1_ptr, x2_ptr);
+		return linear_equation(b, c, x1_ptr, x2_ptr);
 	}
 
 	else //Если a!=0 обычный квадратичный случай
@@ -111,6 +111,10 @@ void coef_generate(int *a_ptr, int *b_ptr, int *c_ptr)
 	// int b = *(numbers[1]);
 	// int c = *(numbers[2]);
 
+	#define MAX_RAND 10
+	#define MIN_RAND -10
+
+
 	double D = 0;
 
 	do //Рерол сгенерированных коэфицентов, 
@@ -118,15 +122,18 @@ void coef_generate(int *a_ptr, int *b_ptr, int *c_ptr)
 		randomize_coefs(MIN_RAND, MAX_RAND, a_ptr, b_ptr, c_ptr); //Генеритрует рандомные коэфиценты
 
 		D = calc_discriminant((double) *a_ptr, (double) *b_ptr, (double) *c_ptr);
-		printf("%d %d %d %g", a_ptr, b_ptr, c_ptr, D);
+		//printf("%d %d %d %g", a_ptr, b_ptr, c_ptr, D);
 
 	} while ((D < 0) || (*a_ptr == 0)); 
+
+	#undef MAX_RAND
+	#undef MIN_RAND
 }
 
 bool check_correct_roots(double x1_user, double x2_user, double x1_correct, double x2_correct)
 {
-	bool is_cor1 = (fabs(x1_user - x1_correct) < 0.01) || (fabs(x1_user - x2_correct) < 0.01) ;
-	bool is_cor2 = (fabs(x2_user - x2_correct) < 0.01) || (fabs(x2_user - x1_correct) < 0.01);
+	bool is_cor1 = (fabs(x1_user - x1_correct) < 0.02) || (fabs(x1_user - x2_correct) < 0.02) ;
+	bool is_cor2 = (fabs(x2_user - x2_correct) < 0.02) || (fabs(x2_user - x1_correct) < 0.02);
 
 	// printf("user1: %g, user2: %g, cor1: %g, cor2: %g", x1_user, x2_user, x1_correct, x2_correct);
 

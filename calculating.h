@@ -3,8 +3,7 @@
 #define CALCULATING_H
 
 #define NUM_COEFS 3
-#define MAX_RAND 10
-#define MIN_RAND -10
+
 
 double calc_discriminant(double a, double b, double c);
 

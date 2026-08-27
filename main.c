@@ -12,11 +12,22 @@
 #include "calculating.h" //Функции для математических вычислений
 #include "unit_test.h"  //Функции связанные с unit tester
 
-#define print(...) slow_printf(__VA_ARGS__)
+
+
+
+const int NUM_PARAMS = 2;
+
+const char MODE_SOLVER[] = "+s";
+const char MODE_TESTER[] = "+t";
+const char HID_MODE_UNIT_TESTER[] = "h+ut";
 
 
 
 
+
+void solver();
+void tester();
+void unit_tester();
 
 void unit_tester()
 {
@@ -27,13 +38,13 @@ void unit_tester()
 
 	print_log();
 
-	char ans_open;
+	char ans_open = '\0';
 
 	do
 	{
 		printf("Do you wanna open LOG.txt? (y/n)");
 		
-		ans_open = getchar();
+		ans_open = (char) getchar();
 		clear_buffer();
 
 	}while (ans_open != 'y' && ans_open != 'n');
@@ -53,7 +64,7 @@ void unit_tester()
 
 void tester()
 {
-	srand(time(NULL)); //Установка разного сида рандома на каждый запуск программы
+	srand((unsigned int) time(NULL)); //Установка разного сида рандома на каждый запуск программы
 	int static score = 0;  //счет пользователя - кол-во верно подряд идущих уравнений
 
 	bool is_wrong = false; //совершил ли пользователь ошибку
@@ -64,7 +75,7 @@ void tester()
 	while (!is_wrong) //Главный цикл генерации очередного квадратного уравнения пока пользователь не ошибется
 	{
 		int a = 0, b = 0, c = 0; //очередные коэфиценты
-		int* coefs[NUM_COEFS] = { &a, &b, &c }; // массив указателей на переменные где хранятся коэфиценты
+		//int* coefs[NUM_COEFS] = { &a, &b, &c }; // массив указателей на переменные где хранятся коэфиценты
 		
 		double  x1_user = 0,  x2_user = 0;  //Корни, которые введет пользователь
 		double  x1_correct = 0, x2_correct = 0;  //Правильные значения корнкй
@@ -102,8 +113,53 @@ void solver() //Главная функция режима solver.
 	print_answer(num_roots, x1, x2); //Вывод ответа - корней или их отсутсвие
 }
 
-int main(void)
+bool correct_param_input(int argc, char* argv[])
 {
+
+}
+
+
+int main(int argc, char* argv[])
+{
+	if (correct_param_input)
+	{
+		
+	}
+
+	if (argc != NUM_PARAMS) //Если кол-во параметров не совпадает, вернуть ошибку
+	{
+		correct_param_input = false;
+	}
+
+	char* input_param = argv[1];
+
+		case SOLVER:
+			print_separator();
+			solver();
+			print_separator();              //s - solver 
+			break; 							//t - tester
+											//q - выйти из программы
+		case TESTER:
+			print_separator();
+			tester();
+			print_separator();
+			break;
+
+		case UNIT_TESTER:
+			print_separator();
+			unit_tester();
+			print_separator();
+			break;
+
+		case QUIT:
+			is_over = true;
+			break;
+		default:
+			printf("--Wrong answer, try again--\n\n");   	
+
+
+			s
+
 	print_topic();  //Вывод приветсвия и описания программы
 
 	char mode_string[2] = "";
@@ -122,34 +178,7 @@ int main(void)
 		
 		clear_buffer();
 
-		switch(mode)
-		{
-			case SOLVER:
-				print_separator();
-				solver();
-				print_separator();              //s - solver 
-				break; 							//t - tester
-												//q - выйти из программы
-			case TESTER:
-				print_separator();
-				tester();
-				print_separator();
-				break;
 
-			case UNIT_TESTER:
-				print_separator();
-				unit_tester();
-				print_separator();
-				break;
-
-			case QUIT:
-				is_over = true;
-				break;
-
-			default:
-				printf("--Wrong answer, try again--\n\n");   	
-		}
-			
 	}
 
 	printf("Good bye!");

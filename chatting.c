@@ -8,6 +8,8 @@
 #include<math.h>
 
 
+
+
 // ГЛАВНОЕ
 //----------------------------------------------------------------------------------------------------------------------------------------------------------
 void print_topic() //Вывод приветсвия и описания программы
@@ -21,6 +23,8 @@ void print_topic() //Вывод приветсвия и описания про�
 		   "Press ENTER to start . . .                                             \n");
 	getchar();
 }
+
+
 //----------------------------------------------------------------------------------------------------------------------------------------------------------
 
 
@@ -84,7 +88,7 @@ void print_answer(int num_roots, double  x1, double  x2) //Вывод ответ
 			#define real x1
 			#define imag x2
 
-			printf("You have two complex roots:\n x1 = %g% + gi\n x2 = %g% + gi\n", real, imag, real, -imag); //Вывод комплексных корней
+			printf("You have two complex roots:\n x1 = %g%+gi\n x2 = %g%+gi\n", real, imag, real, -imag); //Вывод комплексных корней
 
 			#undef real
 			#undef imag
@@ -94,6 +98,10 @@ void print_answer(int num_roots, double  x1, double  x2) //Вывод ответ
 		case INF_ROOTS: 
 			printf("Any number can be a root\n");
 			break;
+
+		default:
+			printf("None information abou roots error!!\n");
+			
 	}
 }
 //----------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -106,10 +114,10 @@ void scan_user_roots(double* x1_user, double* x2_user)
 	printf("Please enter roots of this equation up to the 2 signs after point: \n");
 
 	printf("x1: ");
-	scanf("%lf.2", &x1_user);
+	scanf("%lf.2", x1_user);
 
 	printf("x2: ");
-	scanf("%lf.2", &x2_user);
+	scanf("%lf.2", x2_user);
 
 	clear_buffer();
 

@@ -1,22 +1,14 @@
 #include<stdio.h>
 
-typedef struct 
+#define print(...) printf(__VA_ARGS__)
+
+
+int main(int argc, char *argv[])
 {
-	int a, b, c;
-
-} Type;
-
-void f(Type* strct_ptr)
-{
-	strct_ptr->a *= 2;
-}
-
-int main()
-{
-	Type strct1 = {.a = 1, .b = 2, .c = 3};
-
-	f(&strct1);
-
-	printf("a = %d b = %d c = %d\n", strct1.a, strct1.b, strct1.c);
-
+	printf("argc: %d\n", argc);
+	
+	for (int i = 0; i < argc; i++)
+	{
+		printf("argv[%d]: %s\n", i, argv[i]);
+	}
 }

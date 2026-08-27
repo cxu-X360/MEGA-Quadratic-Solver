@@ -1,14 +1,21 @@
-#include<stdio.h>
-#include<stdlib.h>
-#include<windows.h>
-#include<string.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <ctype.h>
+#include <assert.h>
+#include <math.h>
+
 #include"calculating.h"
 #include"calculating.h"
 
-#define LEN_X2 3;
-#define LEN_X 1;
+#define LEN_SQUARE_X 3
+#define LEN_LINIAR_X 1
+#define MAX_LEN_COEF 100
 
-int delete_all_space(char* string, char* newstring)
+const int POISON = -1;
+
+int delete_all_space(char* string, char* newstring) //Функция принимает строку и закидывает новую строку с удаленными пробельными символами. 
+													//Возвращает кол-во удаленных пробел символов
 {
 	int lenght = strlen(string);
 
@@ -32,12 +39,45 @@ int delete_all_space(char* string, char* newstring)
 	return count;
 }
 
-bool issign(int ch)
+int count_symbols(char* string, char symbol) //Принимает строку и возвращает кол-во указанных симсволов в ней
+{
+	int count = 0;
+	int lenght = strlen(string);
+
+	for (int i = 0; i < lenght; i++)
+	{
+		if (string[i] == symbol)
+		{
+			count++;
+		}
+	}
+
+	return count;
+}
+
+int count_alpha(char* string) //Принимает строку и возвращает кол-во символов, входящих в ASCII как буква алфавита
+{
+	int count = 0;
+	int lenght = strlen(string);
+
+	for (int i = 0; i < lenght; i++)
+	{
+		if (isalpha(string[i]))
+		{
+			count++;
+		}
+	}
+
+	return count;
+}
+
+bool issign(int ch) // Проверяет символ, является ли он плюсом или минусом
 {
 	return (ch == '+' || ch == '-') ? true : false;
 }
 
-bool is_correct(char equation[])
+
+bool is_correct(char equation[])// Проверяет выражение на корректность (если первым символом является + , - или цифра)
 {
 	char first_char = equation[0];
 
@@ -48,68 +88,128 @@ bool is_correct(char equation[])
 	return true;
 } 
 
-void parser(char equation[], int* a_ptr, int* b_ptr, int* c_ptr)
+double coef_to_double(char* coef_str, bool have_begin_sign) //Переводит коэфицент из строкового вида в числовой. Если невозможно, возвращает nan
 {
-	char* a_str = equation; // Потому что программа разрешает строки, которые начинаются сразу с первого коэфицента => указатель на коэф а равен 0
-	char* b_str = NULL; 
-	char* c_str = NULL;
+	assert(strlen(coef_str) < MAX_LEN_COEF);
+
+	int sign = 0;
+
+	int lenght = strlen(coef_str);
+	//printf("len = %d\n", lenght);
+
+	bool is_star_in_end = (coef_str[lenght - 1] == '*');
+
+	if (have_begin_sign)  
+	{
+		if (!issign(coef_str[0])) //Если первый символ не знак, то ошибка
+		{
+			return NAN;	
+		}                           
+	}
+	//printf("coef: %s\n", coef_str);
+	
+	for (int i = have_begin_sign ? 1 : 0; i < ((is_star_in_end) ? (lenght - 1) : lenght); i++) //Проверка всех символов в строке коэфицента кроме первого (для знака и последнего для возможного знака *)
+	{
+
+		//printf("		char_%d: %c,   is_dig = %d\n", i, coef_str[i], isdigit(coef_str[i]));
+		if (!isdigit(coef_str[i]) && coef_str[i] != '.')
+		{
+			//printf("		char_%d: %c\n", i, coef_str[i]);	
+			return NAN;
+		}
+	}
+
+	return strtod(coef_str, NULL);
+}
+
+
+bool parser_v2(char equation[], double* a_ptr, double* b_ptr, double* c_ptr) // --//--//--
+{
+	char cur_char = '\0';
 
 	int i = 0;
 
-	char cur_char = '\0';
-	while (isdigit(cur_char = equation[i]) || issign(cur_char))
+	char* start_ptr = equation; //указатель на начало строки
+	char* square_x_ptr = NULL;  //указатель переменной, что входит со степенью 2
+	char* lin_x_ptr = NULL;     //указатель переменной, что входит со степенью 1
+
+	if (count_symbols(equation, '.') >  3)
+	{
+		return false;
+	}
+
+	if (count_alpha(equation) != 2) //проверка на кол-во букв, иначе стопаем парсер
+	{
+		return false;
+	}
+
+	while (!isalpha(cur_char = equation[i])) //Ищем первое вхождение буквы(то бишь перменной) и отделяем квадратичный коэф
+	{	
+		printf("%c\n", cur_char);
+
+		i ++;
+	}
+
+	char variable = cur_char;  //хранит имя переменной используемой в выражении
+
+	square_x_ptr = &equation[i];
+
+	if (equation[square_x_ptr - start_ptr + 1] != '^' || equation[square_x_ptr - start_ptr + 2] != '2') //Проверка на корректное введение степени "x^2"
+	{
+		return false;
+	}
+
+	i += LEN_SQUARE_X;  //длина выражение "x^2"
+
+	while ((cur_char = equation[i]) != variable) //Ищем след вхождение переменной и отделяем линейный коэф
 	{
 		printf("%c\n", cur_char);
 
-		i++;
-	} 
-
-	i += LEN_X2;
-
-	b_str = a_str + i + 1;
-
-	while ((cur_char = equation[i]) != '*')
-	{
-		printf("%c\n", cur_char);
-		
 		i++;
 	}
 
-	i += LEN_X;
+	lin_x_ptr = &equation[i];
 
-	c_str = a_str + i + 1;
+	i+=LEN_LINIAR_X;
+	
+ 	char a_str[MAX_LEN_COEF] = {};
+ 	char b_str[MAX_LEN_COEF] = {}; //Инициилизация строк, в которых хранятся коэфиценты
+ 	char c_str[MAX_LEN_COEF] = {};
 
-	printf("b_str: %d, c_str: %d\n",(int) (b_str - a_str), (int) (c_str - a_str));
+ 	strncpy(a_str, start_ptr, square_x_ptr - start_ptr);
+ 	strncpy(b_str, square_x_ptr + LEN_SQUARE_X, lin_x_ptr - square_x_ptr - LEN_SQUARE_X); //Копирование значения коэфицентов в соотв строки с помощью указателей на переменную в выражении в степенях 1 и 2
+ 	strncpy(c_str, lin_x_ptr + LEN_LINIAR_X, strlen(equation) - (lin_x_ptr - start_ptr) - 3);
 
-	// sscanf(a_str, "%d", a_ptr);
-	// sscanf(b_str, "%d", b_ptr);
-	// sscanf(c_str, "%d", c_ptr);
+ 	//printf("a_str: %s, b-Str: %s, c_str: %s\n", a_str, b_str, c_str);
 
-	*a_ptr = atoi(a_str);
-	*b_ptr = atoi(b_str);
-	*c_str = atoi(c_str);
-  
+ 	*a_ptr = coef_to_double(a_str, equation[0] == '-');
+ 	*b_ptr = coef_to_double(b_str, true); //Перевод строк в вещественные числа
+ 	*c_ptr = coef_to_double(c_str, true);
+
+ 	printf("a: %lg, b: %lg, c: %lg\n", *a_ptr, *b_ptr, *c_ptr);
+
+ 	return true;
 
 }
 
 int main()
 {
-	const int size_eq = 500;
+	const int size_eq = 500; //Максимальный размер выражения
 
-	int a = 0, b = 0, c = 0;
+	double a = 0, b = 0, c = 0;
 
 	char equation[size_eq] = {};
 	char new_equation[size_eq] = {};
 
 	int len_eq = 0, count_spaces = 0;
 
-	do
+	do //Ввод выражения и удаления в нем пробелов, пока он не окажется правильным
 	{
-		printf("Enter an equation (a*x^2 + b*x + c = 0): ");
+		printf("Enter an equation (a*x^2 + b*x + c = 0 ): ");
 
 		fgets(equation, size_eq, stdin);
 
-		len_eq = strlen(equation);
+		len_eq = strlen(equation);  
 
 		count_spaces = delete_all_space(equation, new_equation);
 
@@ -118,10 +218,15 @@ int main()
 	printf("%s\n", equation);
 	printf("%s\n", new_equation);
 
-	parser(new_equation, &a, &b, &c);
-
-	printf("a = %d, b = %d, c = %d\n", a, b, c);
-
+	if (!parser_v2(new_equation, &a, &b, &c)) //Зафейлить подсчет если если неверно спарсился ввод	
+	{
+			printf("FAIL");
+	}
+	else
+	{
+		printf("a = %lg, b = %lg, c = %lg\n", a, b, c);	
+	}
+	
 
 }
 

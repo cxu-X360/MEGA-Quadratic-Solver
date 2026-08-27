@@ -1,7 +1,8 @@
 #ifndef SERVICE_H
 #define SERVICE_H
 
-#include<math.h>
+#include <math.h>
+#include <stdio.h>
 #define inf INFINITY
 
 #define SOLVER 's'
@@ -30,5 +31,9 @@ void print_separator();
 void slow_print(char *s);
 
 int randomize(int min, int max);
+
+void skip_line(FILE* file);
+
+//void print_arc_arv(int argc, char argv[]);
 
 #endif
