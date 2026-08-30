@@ -28,11 +28,21 @@ void clear_buffer();
 
 void print_separator();
 
-void slow_print(char *s);
+void slow_printf(const char *format_string, ...);
 
 int randomize(int min, int max);
 
 void skip_line(FILE* file);
+
+bool equal_str(const char* str1, const char* str2);
+
+int delete_all_space(const char* string, char* newstring);
+
+int count_symbols(const char* string, char symbol);
+
+int count_alpha(const char* string);
+
+bool issign(int ch);
 
 //void print_arc_arv(int argc, char argv[]);
 

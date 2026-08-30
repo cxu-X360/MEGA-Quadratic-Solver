@@ -122,7 +122,8 @@ void coef_generate(int *a_ptr, int *b_ptr, int *c_ptr)
 		randomize_coefs(MIN_RAND, MAX_RAND, a_ptr, b_ptr, c_ptr); //Генеритрует рандомные коэфиценты
 
 		D = calc_discriminant((double) *a_ptr, (double) *b_ptr, (double) *c_ptr);
-		//printf("%d %d %d %g", a_ptr, b_ptr, c_ptr, D);
+		//
+		printf("%p %p %p %g", a_ptr, b_ptr, c_ptr, D);
 
 	} while ((D < 0) || (*a_ptr == 0)); 
 

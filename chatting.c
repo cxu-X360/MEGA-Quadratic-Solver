@@ -12,19 +12,38 @@
 
 // ГЛАВНОЕ
 //----------------------------------------------------------------------------------------------------------------------------------------------------------
-void print_topic() //Вывод приветсвия и описания программы
+void print_main_topic() //Вывод приветсвия и описания программы
 {
-	printf("_________________________MEGA QUADRATIC SOLVER_________________________\n"
-		   "                                 (v.2.0)                               \n"
+	slow_printf("_________________________MEGA QUADRATIC SOLVER_________________________\n"
+		   "                                 (v.3.0)                               \n"
 		   "\n"
-		   "YOU need to input three coeficents of a quadratic_equation, and this   \n"        //Приветсвенное сообщение пользователю
-		   "programm will calculate its roots  8) 8) 0_0                           \n"
-		   "WE added new mode - quadratic tester!!!!                               \n"
 		   "Press ENTER to start . . .                                             \n");
+
 	getchar();
 }
 
+void print_wrong_param_input()
+{
+	slow_printf("   WRONG INPUT ERROR.\n\n"
+		   "Add only 1 parametr and try again. \n"
+		   "    -s : Open Solver;\n"
+		   "    -t : Open Tester.\n");
+}
 
+void print_goodbye()
+{
+	slow_printf("!!!GOOD BYE!!!\n");
+}
+
+void print_topic_solver()
+{
+	slow_printf("This solver mode. Enter coeficents of quadratic equation and roots will be calculated\n");
+}
+
+void print_topic_tester()
+{
+	slow_printf("This is tester mode. You will solve quadratic equation until you make a mistake\n");
+}
 //----------------------------------------------------------------------------------------------------------------------------------------------------------
 
 

@@ -32,19 +32,34 @@ void print_separator() //выводит текстовый разделител�
 	printf("-------------------------------------------------------------------\n");
 }
 
-void slow_print(char *s) //посимвольно медленно выводит строку, что ей передается со скоростью в 
+void slow_printf(const char* format_string, ...) //посимвольно медленно выводит форматную строку, что ей передается
 {
+	va_list  arg_ptr;
+	va_start(arg_ptr, format_string);
+
+	char* out_string = (char* ) calloc(strlen(format_string) + count_symbols(format_string, '%') * 100, sizeof(char)); 
+
+	vsprintf(out_string, format_string, arg_ptr);
+
 	int i = 0;
-	while (s[i] != '\0'){
-		printf("%c", s[i]);
-		Sleep(20);
+
+	while (out_string[i] != '\0')
+	{
+		printf("%c", out_string[i]);
+
+		Sleep(50);
+
 		i++;
 	}
+
+	putchar('\n');
+
+	free(out_string);
 }
 
 int randomize(int min, int max)
 { 
-	srand((unsigned int) time(NULL));
+	//srand((unsigned int) time(NULL));
 	return (min < max) ? ((rand() % (max - min + 1)) + min) : 0;
 }
 
@@ -61,23 +76,95 @@ void skip_line(FILE* file)
 	//printf("%s", buff);
 }
 
-bool equal_str(char* str1, char* str2)
+bool equal_str(const char* str1, const char* str2)
 {
-	char cur_char1 = cur_char2 = '\0';
 
 	int i = 0;
 
-	while (((cur_char1 = str1[i]) != '\0') && ((cur_char2 = str2[i]) != '\0'))
+	//printf("cur_char1: %c\n cur_char2: %c\n", str1[0], str2[0]);
+
+	while ((str1[i] != '\0') && (str2[i] != '\0'))
 	{
-		if ((cur_char1 - cur_char2) != 0)
+		//printf("cur_char1: %c\n cur_char2: %c\n", str1[i], str2[i]);
+
+		if ((str1[i] - str2[i]) != 0)
 		{
 			return false;
 		}
 
+		i++;
 	}
-	return true;
+
+	//printf("cur_char1: %c\n cur_char2: %c\n", str1[i], str2[i]);
+
+	return str1[i] == str2[i];
 
 }
+
+
+int delete_all_space(const char* string, char* newstring) //Функция принимает строку и закидывает новую строку с удаленными пробельными символами. 
+													//Возвращает кол-во удаленных пробел символов
+{
+	int lenght = (int) strlen(string);
+
+	int j = 0, count = 0;
+
+	for (int i = 0; i < lenght; i++)
+	{
+		if (isspace(string[i]))
+		{
+			count++;
+
+			continue;
+		}
+
+		newstring[j] = string[i];
+
+		j++; 
+	}
+	newstring[j] = '\0';
+
+	return count;
+}
+
+int count_symbols(const char* string, char symbol) //Принимает строку и возвращает кол-во указанных симсволов в ней
+{
+	int count = 0;
+	int lenght = (int) strlen(string);
+
+	for (int i = 0; i < lenght; i++)
+	{
+		if (string[i] == symbol)
+		{
+			count++;
+		}
+	}
+
+	return count;
+}
+
+int count_alpha(const char* string) //Принимает строку и возвращает кол-во символов, входящих в ASCII как буква алфавита
+{
+	int count = 0;
+	int lenght = (int) strlen(string);
+
+	for (int i = 0; i < lenght; i++)
+	{
+		if (isalpha(string[i]))
+		{
+			count++;
+		}
+	}
+
+	return count;
+}
+
+bool issign(int ch) // Проверяет символ, является ли он плюсом или минусом
+{
+	return (ch == '+' || ch == '-') ? true : false;
+}
+
+
 // void print_arc_arv(int argc, char* argv[])
 // {
 // 	printf("%d\n", argc);

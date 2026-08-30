@@ -11,18 +11,14 @@
 #include "chatting.h"   //Функции для взаимодействия с пользователем
 #include "calculating.h" //Функции для математических вычислений
 #include "unit_test.h"  //Функции связанные с unit tester
-
-
+#include "test_draw.c"
 
 
 const int NUM_PARAMS = 2;
 
-const char MODE_SOLVER[] = "+s";
-const char MODE_TESTER[] = "+t";
-const char HID_MODE_UNIT_TESTER[] = "h+ut";
-
-
-
+const char MODE_SOLVER[] = "-s";
+const char MODE_TESTER[] = "-t";
+const char MODE_UNIT_TESTER[] = "h+ut";
 
 
 void solver();
@@ -69,8 +65,7 @@ void tester()
 
 	bool is_wrong = false; //совершил ли пользователь ошибку
 
-	printf("This is tester mode. You will solve quadratic equation until you make a mistake\n");
-	
+	print_topic_tester();
 
 	while (!is_wrong) //Главный цикл генерации очередного квадратного уравнения пока пользователь не ошибется
 	{
@@ -78,7 +73,7 @@ void tester()
 		//int* coefs[NUM_COEFS] = { &a, &b, &c }; // массив указателей на переменные где хранятся коэфиценты
 		
 		double  x1_user = 0,  x2_user = 0;  //Корни, которые введет пользователь
-		double  x1_correct = 0, x2_correct = 0;  //Правильные значения корнкй
+		double  x1_correct = 0, x2_correct = 0;  //Правильные значения корн 		кй
 
 		coef_generate(&a, &b, &c); //генерация коэфицентов очередного уравнения и рерол если D<0 или а=0, чтобы уравнение имело корни гарантировано
 
@@ -111,77 +106,65 @@ void solver() //Главная функция режима solver.
 	int num_roots = solve_equation(a, b, c, &x1 , &x2); // Решение уравнения
 
 	print_answer(num_roots, x1, x2); //Вывод ответа - корней или их отсутсвие
-}
 
-bool correct_param_input(int argc, char* argv[])
-{
-
+	DrawParabola(a, b, c);
 }
 
 
 int main(int argc, char* argv[])
 {
-	if (correct_param_input)
+	
+	if (argc != NUM_PARAMS)
 	{
-		
+		print_wrong_param_input();
+
+		return 0;
 	}
 
-	if (argc != NUM_PARAMS) //Если кол-во параметров не совпадает, вернуть ошибку
-	{
-		correct_param_input = false;
-	}
-
+	
 	char* input_param = argv[1];
 
-		case SOLVER:
-			print_separator();
-			solver();
-			print_separator();              //s - solver 
-			break; 							//t - tester
-											//q - выйти из программы
-		case TESTER:
-			print_separator();
-			tester();
-			print_separator();
-			break;
+	if (equal_str(MODE_SOLVER, input_param))
+	{
+		print_main_topic();  //Вывод приветсвия и описания программы
 
-		case UNIT_TESTER:
-			print_separator();
-			unit_tester();
-			print_separator();
-			break;
+		print_separator();
 
-		case QUIT:
-			is_over = true;
-			break;
-		default:
-			printf("--Wrong answer, try again--\n\n");   	
-
-
-			s
-
-	print_topic();  //Вывод приветсвия и описания программы
-
-	char mode_string[2] = "";
-	bool is_over = false;
-
-
-	while (!(is_over))          //Главный цикл программы
-	{	
-		printf("\nWhich mode do u wanna use?\n");
-		printf("Solver - s \nTester - t \nUnit Tester - u \nQuit - q \n");  //Выбор режима
-		printf("Enter mode: ");
-
-		scanf("%2s", mode_string);
-
-		char mode = (strlen(mode_string) == 1) ? mode_string[0] : '\0';
+		solver();
 		
-		clear_buffer();
-
-
+		print_separator();
 	}
 
-	printf("Good bye!");
+	else if (equal_str(MODE_TESTER, input_param))
+	{
+		print_main_topic();  //Вывод приветсвия и описания программы
+
+		print_separator();
+
+		tester();
+
+		print_separator();
+	}
+
+	else if (equal_str(MODE_UNIT_TESTER, input_param))
+	{
+		print_main_topic();  //Вывод приветсвия и описания программы
+
+		print_separator();
+
+		unit_tester();
+
+		print_separator();
+	}
+
+	else
+	{
+		print_wrong_param_input(); 	
+
+		return 0;
+	}
+
+	print_goodbye();
 
 	return 0;
 }

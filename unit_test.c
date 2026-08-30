@@ -12,8 +12,6 @@
 
 #define nan NAN
 
-
-
 const int int_poison = -2;
  
 const int NUM_TESTS = 100; //Кол-во тестов - приходится использовать #define
@@ -66,10 +64,10 @@ int fscan_test(FILE* file, TestData* test_ptr) //считывает из пот�
 void linear_generation(TestData* test_ptr) // генерация тестов в линейном случае (когда а = 0)
 {		// (*test).b  =>  test->b
 
-	test_ptr->b = (double) randomize(MIN_RAND, MAX_RAND); //Генерация коэф B и С
+	test_ptr->b = (double) randomize(MIN_RAND, MAX_RAND);
 	test_ptr->c = (double) randomize(MIN_RAND, MAX_RAND);
 
-	if (isnul(test_ptr->b)) //Если B = 0, то корней или нет или беск, в зависмости от С
+	if (isnul(test_ptr->b))
 	{
 		test_ptr->x1 = test_ptr->x2 = NAN;
 		
@@ -143,7 +141,7 @@ void quadratic_generation(TestData* test_ptr) // генерация тестов
 
 void generate_tests(FILE* tests_f, int num_tests, bool is_zero_a) // генерирует указанное кол-во тестов и записывает их в файл tests_f, можно указать генерить ли коэф а = 0
 {
-	srand((unsigned int) time(NULL)); //Установка рандомного сида
+	//srand((unsigned int) time(NULL)); //Установка рандомного сида
 
 	tests_f = freopen(tests_filename, "a", tests_f);
 
